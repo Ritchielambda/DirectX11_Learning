@@ -62,7 +62,7 @@ int WINAPI WinMain(HINSTANCE hInstance,	//Main windows function
 	int nShowCmd)
 {
 
-	if(!InitializeWindow(hInstance, nShowCmd, Width, Height, true))
+	if(!InitializeWindow(hInstance, nShowCmd, Width+300, Height+300, true))
 	{
 		MessageBox(0, L"Window Initialization - Failed",
 			L"Error", MB_OK);
@@ -172,11 +172,11 @@ bool InitializeDirect3d11App(HINSTANCE hInstance)
 
 	bufferDesc.Width = Width;
 	bufferDesc.Height = Height;
-	bufferDesc.RefreshRate.Numerator = 60;
+	bufferDesc.RefreshRate.Numerator = 120;
 	bufferDesc.RefreshRate.Denominator = 1;
 	bufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	bufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-	bufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+	bufferDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	
 	//Describe our SwapChain
 	DXGI_SWAP_CHAIN_DESC swapChainDesc; 
@@ -189,7 +189,7 @@ bool InitializeDirect3d11App(HINSTANCE hInstance)
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	swapChainDesc.BufferCount = 1;
 	swapChainDesc.OutputWindow = hwnd; 
-	swapChainDesc.Windowed = TRUE; 
+	swapChainDesc.Windowed = true; 
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 
@@ -242,7 +242,7 @@ void UpdateScene()
 void DrawScene()
 {
 	//Clear our backbuffer to the updated color
-	D3DXCOLOR bgColor( red, green, blue, 1.0f );
+	D3DXCOLOR bgColor( red, green, blue, 0.5f );
 
 	d3d11DevCon->ClearRenderTargetView(renderTargetView, bgColor);
 
