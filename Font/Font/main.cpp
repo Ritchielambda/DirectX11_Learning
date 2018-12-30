@@ -22,7 +22,14 @@
 #include <sstream>
 #include <dwrite.h>
 ///////////////**************new**************////////////////////
+double countsPerSecond = 0.0;
+__int64 CounterStart = 0;
 
+int frameCount = 0;
+int fps = 0;
+
+__int64 frameTimeOld = 0;
+double frameTime;
 //Global Declarations - Interfaces//
 IDXGISwapChain* SwapChain;
 ID3D11Device* d3d11Device;
@@ -90,12 +97,15 @@ float rot = 0.01f;
 bool InitializeDirect3d11App(HINSTANCE hInstance);
 void CleanUp();
 bool InitScene();
-void UpdateScene();
+void UpdateScene(double time);
 void DrawScene();
 ///////////////**************new**************////////////////////
 bool InitD2D_D3D101_DWrite(IDXGIAdapter1 *Adapter);
 void InitD2DScreenTexture();
-void RenderText(std::wstring text);
+void RenderText(std::wstring text, int inInt);
+void StartTimer();
+double GetTime();
+double GetFrameTime();
 ///////////////**************new**************////////////////////
 
 bool InitializeWindow(HINSTANCE hInstance,
@@ -708,10 +718,10 @@ bool InitScene()
 	return true;
 }
 
-void UpdateScene()
+void UpdateScene(double time)
 {
 	//Keep the cubes rotating
-	rot += .005f;
+	rot += 1.0f*time;
 	if(rot > 6.28f)
 		rot = 0.0f;
 
@@ -738,7 +748,7 @@ void UpdateScene()
 }
 
 ///////////////**************new**************////////////////////
-void RenderText(std::wstring text)
+void RenderText(std::wstring text,int fps)
 {
 	//Release the D3D 11 Device
 	keyedMutex11->ReleaseSync(0);
@@ -754,7 +764,7 @@ void RenderText(std::wstring text)
 
 	//Create our string
 	std::wostringstream printString; 
-	printString << text;
+	printString << text<<fps;
 	printText = printString.str();
 
 	//Set the Font Color
@@ -856,7 +866,7 @@ void DrawScene()
 	d3d11DevCon->DrawIndexed( 36, 0, 0 );
 
 	///////////////**************new**************////////////////////
-	RenderText(L"Hello World");
+	RenderText(L"FPS: ", fps);
 	///////////////**************new**************////////////////////
 
 	//Present the backbuffer to the screen
@@ -884,8 +894,17 @@ int messageloop(){
 			DispatchMessage(&msg);
 		}
 		else{
-			// run game code            
-			UpdateScene();
+			// run game code  
+			frameCount++;
+			if (GetTime() > 1.0f)
+			{
+				fps = frameCount;
+				frameCount = 0;
+				StartTimer();
+			}
+
+			frameTime = GetFrameTime();
+			UpdateScene(frameTime);
 			DrawScene();
 		}
 	}
@@ -915,3 +934,35 @@ LRESULT CALLBACK WndProc(HWND hwnd,
 		lParam);
 }
 
+void StartTimer()
+{
+	LARGE_INTEGER frequencyCount;
+	QueryPerformanceFrequency(&frequencyCount);
+
+	countsPerSecond = double(frequencyCount.QuadPart);
+
+	QueryPerformanceCounter(&frequencyCount);
+	CounterStart = frequencyCount.QuadPart;
+}
+
+double GetTime()
+{
+	LARGE_INTEGER currentTime;
+	QueryPerformanceCounter(&currentTime);
+	return double(currentTime.QuadPart - CounterStart) / countsPerSecond;
+}
+
+double GetFrameTime()
+{
+	LARGE_INTEGER currentTime;
+	__int64 tickCount;
+	QueryPerformanceCounter(&currentTime);
+
+	tickCount = currentTime.QuadPart - frameTimeOld;
+	frameTimeOld = currentTime.QuadPart;
+
+	if (tickCount < 0.0f)
+		tickCount = 0.0f;
+
+	return float(tickCount) / countsPerSecond;
+}

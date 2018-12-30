@@ -165,6 +165,8 @@ d:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4988):
   c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50966): note: 参见“DWRITE_E_FONTCOLLECTIONOBSOLETE”的前一个定义
 d:\program files (x86)\microsoft directx sdk (june 2010)\include\dwrite.h(4993): warning C4005: “DWRITE_E_ALREADYREGISTERED”: 宏重定义
   c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50975): note: 参见“DWRITE_E_ALREADYREGISTERED”的前一个定义
-d:\githubrepository\directx11_learning\font\font\main.cpp(767): warning C4244: “参数”: 从“const int”转换到“FLOAT”，可能丢失数据
+d:\githubrepository\directx11_learning\font\font\main.cpp(724): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+d:\githubrepository\directx11_learning\font\font\main.cpp(777): warning C4244: “参数”: 从“const int”转换到“FLOAT”，可能丢失数据
+d:\githubrepository\directx11_learning\font\font\main.cpp(965): warning C4244: “=”: 从“float”转换到“__int64”，可能丢失数据
   Font.vcxproj -> D:\GithubRepository\DirectX11_Learning\Font\Debug\Font.exe
   Font.vcxproj -> D:\GithubRepository\DirectX11_Learning\Font\Debug\Font.pdb (Full PDB)

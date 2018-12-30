@@ -31,8 +31,8 @@ LPCTSTR WndClassName = L"firstwindow";
 HWND hwnd = NULL;
 HRESULT hr;
 
-const int Width  = 300;
-const int Height = 300;
+const int Width  = 800;
+const int Height = 600;
 
 XMMATRIX WVP;
 ///////////////**************new**************////////////////////
@@ -176,7 +176,7 @@ bool InitializeWindow(HINSTANCE hInstance,
 	hwnd = CreateWindowEx(
 		NULL,
 		WndClassName,
-		L"Lesson 4 - Begin Drawing",
+		L"DirectX",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		width, height,
@@ -412,7 +412,7 @@ bool InitScene()
 	cbbd.MiscFlags = 0;
 
 	hr = d3d11Device->CreateBuffer(&cbbd, NULL, &cbPerObjectBuffer);
-
+	
 	//Camera information
 	///////////////**************new**************////////////////////
 	camPosition = XMVectorSet( 0.0f, 3.0f, -8.0f, 0.0f );
@@ -431,31 +431,31 @@ bool InitScene()
 ///////////////**************new**************////////////////////
 void UpdateScene()
 {
-	//Keep the cubes rotating
-	rot += .0005f;
-	if(rot > 6.26f)
-		rot = 0.0f;
+	////Keep the cubes rotating
+	//rot += .0005f;
+	//if(rot > 6.26f)
+	//	rot = 0.0f;
 
 	//Reset cube1World
 	cube1World = XMMatrixIdentity();
-
+	Scale = XMMatrixScaling(2.0f, 2.f, 2.f);
 	//Define cube1's world space matrix
 	XMVECTOR rotaxis = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	Rotation = XMMatrixRotationAxis( rotaxis, rot);
+	Rotation = XMMatrixRotationAxis( rotaxis, 0.785);
 	Translation = XMMatrixTranslation( 0.0f, 0.0f, 4.0f );
 
 	//Set cube1's world space using the transformations
-	cube1World = Translation * Rotation;
+	cube1World =  Rotation;
 
 	//Reset cube2World
-	cube2World = XMMatrixIdentity();
+	//cube2World = XMMatrixIdentity();
 
-	//Define cube2's world space matrix
-	Rotation = XMMatrixRotationAxis( rotaxis, -rot);
-	Scale = XMMatrixScaling( 1.3f, 1.3f, 1.3f );
+	////Define cube2's world space matrix
+	//Rotation = XMMatrixRotationAxis( rotaxis, -rot);
+	//Scale = XMMatrixScaling( 1.3f, 1.3f, 1.3f );
 
-	//Set cube2's world space matrix
-	cube2World = Rotation * Scale;
+	////Set cube2's world space matrix
+	//cube2World = Rotation * Scale;
 }
 ///////////////**************new**************////////////////////
 

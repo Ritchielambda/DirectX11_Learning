@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3D11_HRTimer", "D3D11_HRTimer\D3D11_HRTimer.vcxproj", "{F794511A-A59E-4C37-8583-9B0B3830F58A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F794511A-A59E-4C37-8583-9B0B3830F58A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F794511A-A59E-4C37-8583-9B0B3830F58A}.Debug|Win32.Build.0 = Debug|Win32
+		{F794511A-A59E-4C37-8583-9B0B3830F58A}.Release|Win32.ActiveCfg = Release|Win32
+		{F794511A-A59E-4C37-8583-9B0B3830F58A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
